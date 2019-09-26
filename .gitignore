@@ -1,4 +1,3 @@
 node_modules
 .vscode
-src/config/auth.js
-src/config/database.js
+.env
