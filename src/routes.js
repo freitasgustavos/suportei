@@ -13,16 +13,21 @@ import authMiddleware from './app/middlewares/auth';
 const routes = new Router();
 
 routes.post('/sessions', SessionController.store);
+routes.post('/users', UserController.store);
 
 routes.use(authMiddleware);
 
-routes.post('/users', UserController.store);
+routes.get('/users', UserController.index);
 routes.put('/users', UserController.update);
+routes.delete('/users', UserController.delete);
 
 routes.get('/providers', ProviderController.index);
 
 routes.get('/tickets', TicketController.index);
+routes.get('/tickets/:id', TicketController.show);
 routes.post('/tickets', TicketController.store);
+routes.put('/tickets/:id', TicketController.update);
+routes.delete('/tickets', TicketController.delete);
 
 routes.get('/schedules', ScheduleController.index);
 
