@@ -19,7 +19,7 @@ routes.use(authMiddleware);
 
 routes.get('/users', UserController.index);
 routes.put('/users', UserController.update);
-routes.delete('/users', UserController.delete);
+routes.delete('/users/:id', UserController.delete);
 
 routes.get('/providers', ProviderController.index);
 
@@ -27,7 +27,7 @@ routes.get('/tickets', TicketController.index);
 routes.get('/tickets/:id', TicketController.show);
 routes.post('/tickets', TicketController.store);
 routes.put('/tickets/:id', TicketController.update);
-routes.delete('/tickets', TicketController.delete);
+routes.delete('/tickets/:id', TicketController.delete);
 
 routes.get('/schedules', ScheduleController.index);
 
