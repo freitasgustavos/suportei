@@ -30,6 +30,36 @@ class TicketController {
     return res.json(tickets);
   }
 
+  async show(req, res) {
+    const ticket = await Ticket.findOne({
+      where: { id: req.params.id },
+      attributes: ['id', 'title', 'description', 'status', 'priority'],
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name'],
+        },
+        {
+          model: User,
+          as: 'provider',
+          attributes: ['id', 'name'],
+        },
+        {
+          model: Customer,
+          as: 'customer',
+          attributes: ['id', 'name', 'email'],
+        },
+      ],
+    });
+
+    if (!ticket) {
+      return res.status(400).json({ error: 'Ticket is not exists' });
+    }
+
+    return res.json(ticket);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       title: Yup.string()
@@ -68,7 +98,7 @@ class TicketController {
     const customerExists = await Customer.findByPk(customer_id);
 
     if (!customerExists) {
-      return res.status(401).json({ error: 'Client does not exist' });
+      return res.status(400).json({ error: 'Client does not exist' });
     }
 
     if (req.userId === provider_id) {
@@ -93,6 +123,61 @@ class TicketController {
     });
 
     return res.json(ticket);
+  }
+
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      title: Yup.string().min(6),
+      description: Yup.string(),
+      status: Yup.number().required(),
+      priority: Yup.number().required(),
+      provider_id: Yup.number().required(),
+      customer_id: Yup.number().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    const providerExists = await User.findOne({
+      where: { id: req.body.provider_id, provider: true },
+    });
+
+    if (!providerExists) {
+      return res.status(400).json({ error: 'Provider is not exist' });
+    }
+
+    const customerExists = await Customer.findByPk(req.body.customer_id);
+
+    if (!customerExists) {
+      return res.status(400).json({ error: 'Client does not exist' });
+    }
+
+    const ticket = await Ticket.findByPk(req.params.id);
+
+    const {
+      id,
+      title,
+      description,
+      status,
+      priority,
+      provider_id,
+      customer_id,
+    } = await ticket.update(req.body);
+
+    return res.json({
+      id,
+      title,
+      description,
+      status,
+      priority,
+      provider_id,
+      customer_id,
+    });
+  }
+
+  async delete(req, res) {
+    res.send('Got a DELETE request at /user');
   }
 }
 
