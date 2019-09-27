@@ -8,7 +8,7 @@ class ScheduleController {
     });
 
     if (!checkUserProvider) {
-      return req.status(401).json({ error: 'User is not a provider' });
+      return res.status(401).json({ error: 'User is not a provider' });
     }
 
     const ticket = await Ticket.findAll({
