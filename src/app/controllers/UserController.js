@@ -2,6 +2,14 @@ import * as Yup from 'yup';
 import User from '../models/User';
 
 class UserController {
+  async index(req, res) {
+    const user = await User.findAll({
+      attributes: ['id', 'name', 'email', 'provider'],
+    });
+
+    return res.json(user);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -75,6 +83,30 @@ class UserController {
       name,
       email,
       provider,
+    });
+  }
+
+  async delete(req, res) {
+    const schema = Yup.object().shape({
+      id: Yup.number().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    const { id } = req.body;
+
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(400).json({ error: 'User does not exist' });
+    }
+
+    await user.destroy(id);
+
+    return res.json({
+      id,
     });
   }
 }
