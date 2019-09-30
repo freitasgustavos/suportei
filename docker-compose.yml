@@ -1,0 +1,48 @@
+version: "3.7"
+
+services:
+  suportei-api:
+    build: .
+    container_name: suportei-api
+    command: yarn dev
+    volumes:
+      - .:/home/node/api
+      - /home/node/api/node_modules
+    ports:
+      - "3333:3333"
+    depends_on:
+      - suportei-mongo
+      - suportei-db
+    networks:
+      - suportei-network
+
+  suportei-mongo:
+    image: mongo
+    container_name: suportei-mongo
+    ports:
+     - "27017:27017"
+    volumes:
+      - suportei-mongo-data:/data
+    networks:
+      - suportei-network
+
+  suportei-db:
+    image: postgres:9.6
+    container_name: suportei-db
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - suportei-db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - suportei-network
+
+volumes:
+  suportei-mongo-data:
+  suportei-db-data:
+
+networks:
+  suportei-network:
+    driver: bridge
