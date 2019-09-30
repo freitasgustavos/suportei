@@ -1,4 +1,4 @@
-version: "3.7"
+version: '3'
 
 services:
   suportei-api:
@@ -9,7 +9,7 @@ services:
       - .:/home/node/api
       - /home/node/api/node_modules
     ports:
-      - "3333:3333"
+      - '3333:3333'
     depends_on:
       - suportei-mongo
       - suportei-db
@@ -20,7 +20,7 @@ services:
     image: mongo
     container_name: suportei-mongo
     ports:
-     - "27017:27017"
+      - '27017:27017'
     volumes:
       - suportei-mongo-data:/data
     networks:
@@ -35,7 +35,7 @@ services:
     volumes:
       - suportei-db-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - '5432:5432'
     networks:
       - suportei-network
 
