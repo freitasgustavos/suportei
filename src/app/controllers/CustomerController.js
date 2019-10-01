@@ -10,6 +10,16 @@ class CustomerController {
     return res.json(customer);
   }
 
+  async show(req, res) {
+    const customer = await Customer.findByPk(req.params.id);
+
+    if (!customer) {
+      return res.status(400).json({ error: 'customer does not exist' });
+    }
+
+    return res.json(customer);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
