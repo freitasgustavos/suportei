@@ -4,7 +4,7 @@ services:
   suportei-api:
     build: .
     container_name: suportei-api
-    command: yarn dev
+    command: /bin/sh -c "yarn sequelize db:migrate && yarn dev"
     volumes:
       - .:/home/node/api
       - /home/node/api/node_modules
