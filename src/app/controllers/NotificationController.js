@@ -6,7 +6,6 @@ class NotificationController {
     const checkUserProvider = await User.findOne({
       where: {
         id: req.userId,
-        provider: true,
       },
     });
 

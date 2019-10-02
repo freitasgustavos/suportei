@@ -5,9 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "pretest": "set NODE_ENV=test sequelize db:migrate",
-    "test": "set NODE_ENV=test jest",
-    "posttest": "set NODE_ENV=test sequelize db:migrate:undo:all"
+    "test": "jest"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -1,21 +1,26 @@
 import Ticket from '../models/Ticket';
 import User from '../models/User';
+import Customer from '../models/Customer';
 
 class ScheduleController {
   async index(req, res) {
-    const checkUserProvider = await User.findOne({
-      where: { id: req.userId, provider: true },
-    });
-
-    if (!checkUserProvider) {
-      return res.status(401).json({ error: 'User is not a provider' });
-    }
-
     const ticket = await Ticket.findAll({
       where: {
         provider_id: req.userId,
       },
-      order: ['priority'],
+      order: [['priority', 'DESC']],
+      include: [
+        {
+          model: User,
+          as: 'provider',
+          attributes: ['id', 'name'],
+        },
+        {
+          model: Customer,
+          as: 'customer',
+          attributes: ['id', 'name', 'email'],
+        },
+      ],
     });
 
     return res.json(ticket);
