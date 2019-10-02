@@ -2,10 +2,6 @@
 
 > Sistema para controle de chamados para empresa de telecom
 
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
-
 Um sistema simples com controle de usuário, autenticação JWT, cadastro de clientes, cadastro dos chamados e notificações.
 
 ## Instalação
@@ -26,8 +22,6 @@ docker-compose up
 
 Arquivo Insomnia_2019-10-01.json
 
-_Para mais exemplos, consulte a [Wiki][wiki]._
-
 ## Histórico de lançamentos
 
 - 0.0.1
@@ -47,9 +41,5 @@ Gustavo Freitas – [@freitasgustavos](https://twitter.com/freitasgustavos) – 
 4. _Push_ (`git push origin feature/fooBar`)
 5. Crie um novo _Pull Request_
 
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/seunome/seuprojeto/wiki
